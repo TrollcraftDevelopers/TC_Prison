@@ -1,0 +1,7 @@
+name: TCPrison
+version: 1.0.0-SNAPSHOT
+authors:
+  - SkepsonSk
+  - Stoormrage
+
+main: pl.trollcraft.prison.PrisonPlugin
