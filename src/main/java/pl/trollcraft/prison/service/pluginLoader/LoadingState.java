@@ -2,8 +2,19 @@ package pl.trollcraft.prison.service.pluginLoader;
 
 public class LoadingState {
 
+    //TODO move to a separate class
     public static LoadingState OK() {
         return new LoadingState(true, false, "");
+    }
+
+    //TODO move to a separate class
+    public static LoadingState critical(String message) {
+        return new LoadingState(false, true, message);
+    }
+
+    //TODO move to a separate class
+    public static LoadingState error(String message) {
+        return new LoadingState(false, false, message);
     }
 
     private final boolean ok;

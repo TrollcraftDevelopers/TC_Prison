@@ -15,13 +15,15 @@ public final class PluginLoader {
             = Logger.getLogger(PluginLoader.class.getSimpleName());
 
     private final Set<LoadingTask> loadingTasks;
-
-    public void registerLoadingTask(LoadingTask loadingTask) {
-        this.loadingTasks.add(loadingTask);
-    }
+    private final DependencyMapper dependencyMapper;
 
     public PluginLoader() {
         loadingTasks = new HashSet<>();
+        this.dependencyMapper = new DependencyMapper();
+    }
+
+    public void registerLoadingTask(LoadingTask loadingTask) {
+        this.loadingTasks.add(loadingTask);
     }
 
     public boolean perform(Operation operation) {
@@ -29,7 +31,7 @@ public final class PluginLoader {
         for (LoadingTask loadingTask : this.loadingTasks) {
 
             LOG.info("Loading: " + loadingTask.name());
-            loadingState = operation == Operation.LOAD ? loadingTask.performLoad() : loadingTask.performUnload();
+            loadingState = operation == Operation.LOAD ? loadingTask.performLoad(dependencyMapper) : loadingTask.performUnload(dependencyMapper);
             if (!loadingState.isOk()) {
 
                 if (loadingState.isCritical()){
