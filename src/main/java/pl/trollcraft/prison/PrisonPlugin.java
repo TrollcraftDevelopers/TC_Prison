@@ -16,7 +16,7 @@ public class PrisonPlugin extends JavaPlugin {
 
     @Override
     public void onLoad() {
-        this.pluginLoader = PluginLoaderInitializer.performInitialization();
+        this.pluginLoader = PluginLoaderInitializer.performInitialization(this);
     }
 
     @Override

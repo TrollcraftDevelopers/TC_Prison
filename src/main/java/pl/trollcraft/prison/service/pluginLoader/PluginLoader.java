@@ -28,6 +28,7 @@ public final class PluginLoader {
         LoadingState loadingState;
         for (LoadingTask loadingTask : this.loadingTasks) {
 
+            LOG.info("Loading: " + loadingTask.name());
             loadingState = operation == Operation.LOAD ? loadingTask.performLoad() : loadingTask.performUnload();
             if (!loadingState.isOk()) {
 

@@ -2,6 +2,10 @@ package pl.trollcraft.prison.service.pluginLoader;
 
 public class LoadingState {
 
+    public static LoadingState OK() {
+        return new LoadingState(true, false, "");
+    }
+
     private final boolean ok;
     private final boolean critical;
     private final String message;
