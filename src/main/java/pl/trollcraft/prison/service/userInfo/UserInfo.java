@@ -7,10 +7,10 @@ import java.util.UUID;
 
 public class UserInfo {
 
-    private UUID uuid;
-    private String lastNickname;
+    private final UUID uuid;
+    private final String lastNickname;
 
-    private Set<UserComponent> components;
+    private final Set<UserComponent> components;
 
     public UserInfo(UUID uuid, String lastNickname) {
         this.uuid = uuid;

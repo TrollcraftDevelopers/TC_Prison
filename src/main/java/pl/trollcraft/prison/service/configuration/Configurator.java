@@ -111,6 +111,10 @@ public class Configurator {
         conf.set(key, o);
     }
 
+    public void remove(String key) {
+        this.conf.set(key, null);
+    }
+
     public YamlConfiguration conf() {
         return conf;
     }

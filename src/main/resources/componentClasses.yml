@@ -1,0 +1,5 @@
+# EN: Do not change anything unless you know what you are doing!
+# PL: Nie zmieniaj tutaj nic, chyba że wiesz, co robisz!
+
+componentClasses:
+  - 'pl.trollcraft.prison.service.testComponent.TestUserComponent'
