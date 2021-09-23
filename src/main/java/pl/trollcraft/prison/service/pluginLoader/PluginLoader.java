@@ -52,5 +52,7 @@ public final class PluginLoader {
         return true;
     }
 
-
+    public DependencyMapper getDependencyMapper() {
+        return dependencyMapper;
+    }
 }

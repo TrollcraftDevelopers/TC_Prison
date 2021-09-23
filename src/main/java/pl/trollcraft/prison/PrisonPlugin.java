@@ -1,7 +1,9 @@
 package pl.trollcraft.prison;
 
 import org.bukkit.plugin.java.JavaPlugin;
+import pl.trollcraft.prison.constants.ExceptionConstants;
 import pl.trollcraft.prison.constants.LocaleConstants;
+import pl.trollcraft.prison.service.localeService.LocaleService;
 import pl.trollcraft.prison.service.pluginLoader.PluginLoader;
 import pl.trollcraft.prison.service.pluginLoader.PluginLoaderInitializer;
 
@@ -29,9 +31,13 @@ public class PrisonPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        LocaleService localeService = this.pluginLoader.getDependencyMapper().getDependency(LocaleService.class)
+                .orElseThrow( () -> new IllegalStateException(ExceptionConstants.PLUGIN_DISABLE_LOCALE_SERVICE_NOT_FOUND) );
+
+        String pluginNotDisabledCorrectlyMessage = localeService.get(LocaleConstants.PLUGIN_NOT_DISABLED_CORRECTLY);
         boolean loadingStatus = pluginLoader.perform(PluginLoader.Operation.UNLOAD);
         if (!loadingStatus) {
-            LOG.severe(LocaleConstants.PLUGIN_NOT_DISABLED_CORRECTLY);
+            LOG.severe(pluginNotDisabledCorrectlyMessage);
         }
     }
 }

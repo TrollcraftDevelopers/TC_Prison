@@ -83,19 +83,15 @@ public class UserInfoManager {
     public boolean unregisterComponent(UserInfo userInfo, Class<? extends UserComponent> componentClass) {
         String fileName = String.format("users/%s.yml", userInfo.getUUID().toString());
         Configurator configurator = new Configurator(plugin, fileName, false);
-
         return userInfo.getComponents().removeIf( userComponent -> {
             if (userComponent.getClass().equals(componentClass)) {
-
                 String key = String.format("components.%s", userComponent.getClass().getSimpleName());
                 if (configurator.exists(key)) {
                     configurator.remove(key);
                     configurator.save();
                 }
-
                 return true;
             }
-
             return false;
         } );
     }
