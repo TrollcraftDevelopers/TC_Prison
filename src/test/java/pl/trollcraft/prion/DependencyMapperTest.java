@@ -27,7 +27,6 @@ public class DependencyMapperTest {
 
         assertTrue(dependencyTestClassA.isPresent());
         assertTrue(dependencyTestClassB.isPresent());
-
         assertEquals(dependencyTestClassA.get(), testClassA);
         assertEquals(dependencyTestClassB.get(), testClassB);
     }

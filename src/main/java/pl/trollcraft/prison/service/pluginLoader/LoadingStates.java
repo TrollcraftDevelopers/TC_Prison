@@ -2,7 +2,7 @@ package pl.trollcraft.prison.service.pluginLoader;
 
 public final class LoadingStates {
 
-    public static LoadingState OK() {
+    public static LoadingState ok() {
         return new LoadingState(true, false, "");
     }
 

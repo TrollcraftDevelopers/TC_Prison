@@ -1,5 +1,6 @@
 name: TCPrison
 version: 1.0.0-SNAPSHOT
+api-version: 1.16
 authors:
   - SkepsonSk
   - Stoormrage

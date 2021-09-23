@@ -12,6 +12,7 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Set;
 
 public class Configurator {
@@ -20,13 +21,20 @@ public class Configurator {
     private final YamlConfiguration conf;
     private final File file;
 
-    public Configurator(Plugin plugin, String fileName) {
+    public Configurator(Plugin plugin, String fileName, boolean resource) {
         this.plugin = plugin;
 
         file = new File(this.plugin.getDataFolder() + File.separator + fileName);
         if (!file.exists()) {
             this.tryToCreateDirectories(fileName);
-            plugin.saveResource(fileName, false);
+
+            if (resource) {
+                plugin.saveResource(fileName, false);
+            }
+            else {
+                this.createFile(file);
+            }
+
         }
         conf = new YamlConfiguration();
 
@@ -35,6 +43,19 @@ public class Configurator {
         } catch (IOException | InvalidConfigurationException e) {
             e.printStackTrace();
             throw new IllegalStateException(String.format(ExceptionConstants.CONFIGURATOR_FAILED_TO_LOAD_CONFIG, fileName));
+        }
+    }
+
+    //TODO add to locale service
+    private void createFile(File file) {
+        try {
+
+            if (!file.createNewFile()) {
+                throw new IllegalStateException();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -78,6 +99,10 @@ public class Configurator {
         return clazz.cast(o);
     }
 
+    public List<String> readStringList(String key) {
+        return conf.getStringList(key);
+    }
+
     public boolean exists(String key) {
         return conf.contains(key);
     }
@@ -91,13 +116,11 @@ public class Configurator {
     }
 
     public void save() {
-
         try {
             conf.save(file);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
 }
