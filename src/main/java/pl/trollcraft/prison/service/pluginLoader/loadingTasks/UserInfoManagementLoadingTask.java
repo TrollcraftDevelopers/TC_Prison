@@ -12,6 +12,11 @@ import pl.trollcraft.prison.service.userInfo.listener.PlayerJoinQuitListener;
 public class UserInfoManagementLoadingTask implements LoadingTask {
 
     @Override
+    public int priority() {
+        return 750;
+    }
+
+    @Override
     public String name() {
         return getClass().getSimpleName();
     }

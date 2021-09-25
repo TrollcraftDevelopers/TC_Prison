@@ -1,5 +1,6 @@
 package pl.trollcraft.prison.service.userInfo;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import pl.trollcraft.prison.constants.ExceptionConstants;
@@ -30,6 +31,7 @@ public class UserInfoManager {
         String fileName = String.format("users/%s.yml", userInfo.getUUID().toString());
         Configurator configurator = new Configurator(plugin, fileName, false);
         configurator.write("lastNickname", userInfo.getLastNickname());
+
         userInfo.getComponents().forEach( userComponent -> userComponent.save(configurator) );
         configurator.save();
     }
