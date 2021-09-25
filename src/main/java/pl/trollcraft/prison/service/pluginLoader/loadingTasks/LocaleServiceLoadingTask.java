@@ -14,11 +14,6 @@ public class LocaleServiceLoadingTask implements LoadingTask {
     }
 
     @Override
-    public String name() {
-        return getClass().getSimpleName();
-    }
-
-    @Override
     public LoadingState performLoad(PluginInstance pluginInstance, DependencyMapper dependencyMapper) {
         Configurator configurator = new Configurator(pluginInstance.getPlugin(), "locale.yml", true);
         Config<LocaleService> localeServiceConfig = new LocaleConfig();

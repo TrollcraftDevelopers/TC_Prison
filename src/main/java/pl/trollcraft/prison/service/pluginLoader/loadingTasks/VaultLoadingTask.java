@@ -15,11 +15,6 @@ public final class VaultLoadingTask implements LoadingTask {
     }
 
     @Override
-    public String name() {
-        return getClass().getSimpleName();
-    }
-
-    @Override
     public LoadingState performLoad(PluginInstance pluginInstance, DependencyMapper dependencyMapper) {
 
         Server server = pluginInstance.getPlugin().getServer();

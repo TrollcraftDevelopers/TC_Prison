@@ -19,11 +19,6 @@ public final class MoneyDroppingLoadingTask implements LoadingTask {
     }
 
     @Override
-    public String name() {
-        return getClass().getSimpleName();
-    }
-
-    @Override
     public LoadingState performLoad(PluginInstance pluginInstance, DependencyMapper dependencyMapper) {
 
         Optional<Economy> oEconomy = dependencyMapper.getDependency(Economy.class);

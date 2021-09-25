@@ -2,6 +2,7 @@ package pl.trollcraft.prison.service.pluginLoader;
 
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import pl.trollcraft.prison.constants.SystemLocaleConstants;
 
 import java.util.*;
 import java.util.logging.Logger;
@@ -42,7 +43,8 @@ public final class PluginLoader {
         LoadingState loadingState;
         for (LoadingTask loadingTask : this.loadingTasks) {
 
-            LOG.info("Loading: " + loadingTask.name());
+            LOG.info(String.format(SystemLocaleConstants.PLUGIN_LOADER_LOADING_TASK, loadingTask.getClass().getSimpleName()));
+
             loadingState = operation == Operation.LOAD ? loadingTask.performLoad(this.pluginInstance, dependencyMapper) : loadingTask.performUnload(this.pluginInstance, dependencyMapper);
             if (!loadingState.isOk()) {
 
