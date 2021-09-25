@@ -6,3 +6,9 @@ authors:
   - Stoormrage
 
 main: pl.trollcraft.prison.PrisonPlugin
+
+soft-depend: [Vault]
+
+commands:
+  moneyDrop:
+    aliases: [wyplac, banknot]

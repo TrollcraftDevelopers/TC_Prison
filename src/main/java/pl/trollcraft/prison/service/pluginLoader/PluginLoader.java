@@ -3,8 +3,7 @@ package pl.trollcraft.prison.service.pluginLoader;
 import com.google.common.eventbus.EventBus;
 import org.bukkit.plugin.Plugin;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Logger;
 
 public final class PluginLoader {
@@ -18,20 +17,28 @@ public final class PluginLoader {
             = Logger.getLogger(PluginLoader.class.getSimpleName());
 
     private final Plugin plugin;
-    private final Set<LoadingTask> loadingTasks;
+    private final List<LoadingTask> loadingTasks;
     private final DependencyMapper dependencyMapper;
+    private final LoadingTaskPriorityComparator comparator;
 
     public PluginLoader(Plugin plugin) {
         this.plugin = plugin;
-        loadingTasks = new HashSet<>();
+        loadingTasks = new ArrayList<>();
         this.dependencyMapper = new DependencyMapper();
+        this.comparator = new LoadingTaskPriorityComparator();
     }
 
     public void registerLoadingTask(LoadingTask loadingTask) {
         this.loadingTasks.add(loadingTask);
     }
 
+    private void orderLoadingTasks() {
+        this.loadingTasks.sort(comparator);
+    }
+
     public boolean perform(Operation operation) {
+        this.orderLoadingTasks();
+
         LoadingState loadingState;
         for (LoadingTask loadingTask : this.loadingTasks) {
 

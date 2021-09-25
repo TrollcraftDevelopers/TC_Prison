@@ -1,4 +1,4 @@
-package pl.trollcraft.prion;
+package pl.trollcraft.prison;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -12,6 +12,7 @@ public class DependencyMapperTest {
 
     private static class TestClassA {}
     private static class TestClassB {}
+    private static class TestSuperClassA extends TestClassA {}
 
     @Test
     void shouldReturnValidObjectsForClasses() {
@@ -29,6 +30,19 @@ public class DependencyMapperTest {
         assertTrue(dependencyTestClassB.isPresent());
         assertEquals(dependencyTestClassA.get(), testClassA);
         assertEquals(dependencyTestClassB.get(), testClassB);
+    }
+
+    @Test
+    void shouldReturnValidObjectForAssignableClass() {
+        TestSuperClassA testSuperClassA = new TestSuperClassA();
+
+        DependencyMapper dependencyMapper = new DependencyMapper();
+        dependencyMapper.registerDependency(testSuperClassA);
+
+        Optional<TestClassA> dependencyTestClassA = dependencyMapper.getDependency(TestClassA.class);
+
+        assertTrue(dependencyTestClassA.isPresent());
+        assertEquals(dependencyTestClassA.get(), testSuperClassA);
     }
 
 }

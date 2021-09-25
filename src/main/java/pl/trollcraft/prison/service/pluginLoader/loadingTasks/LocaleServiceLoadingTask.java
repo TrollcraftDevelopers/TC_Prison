@@ -13,6 +13,11 @@ import pl.trollcraft.prison.service.pluginLoader.LoadingTask;
 public class LocaleServiceLoadingTask implements LoadingTask {
 
     @Override
+    public int priority() {
+        return 1000;
+    }
+
+    @Override
     public String name() {
         return getClass().getSimpleName();
     }
