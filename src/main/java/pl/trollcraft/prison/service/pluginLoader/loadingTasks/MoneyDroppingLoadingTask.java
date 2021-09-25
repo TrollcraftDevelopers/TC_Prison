@@ -7,10 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import pl.trollcraft.prison.service.moneyDropping.MoneyDroppingService;
 import pl.trollcraft.prison.service.moneyDropping.command.DropMoneyCommand;
 import pl.trollcraft.prison.service.moneyDropping.listener.MoneyDepositListener;
-import pl.trollcraft.prison.service.pluginLoader.DependencyMapper;
-import pl.trollcraft.prison.service.pluginLoader.LoadingState;
-import pl.trollcraft.prison.service.pluginLoader.LoadingStates;
-import pl.trollcraft.prison.service.pluginLoader.LoadingTask;
+import pl.trollcraft.prison.service.pluginLoader.*;
 
 import java.util.Optional;
 
@@ -27,30 +24,24 @@ public final class MoneyDroppingLoadingTask implements LoadingTask {
     }
 
     @Override
-    public LoadingState performLoad(Plugin plugin, DependencyMapper dependencyMapper) {
+    public LoadingState performLoad(PluginInstance pluginInstance, DependencyMapper dependencyMapper) {
 
         Optional<Economy> oEconomy = dependencyMapper.getDependency(Economy.class);
         if (oEconomy.isEmpty()) {
             return LoadingStates.error("Nie mozna zaladowac systemu banknotow.");
         }
 
-        JavaPlugin javaPlugin = (JavaPlugin) plugin;
-
         Economy economy = oEconomy.get();
         MoneyDroppingService moneyDroppingService = new MoneyDroppingService(economy);
 
-        PluginCommand moneyDropCommand = javaPlugin.getCommand("moneyDrop");
-        if (moneyDropCommand != null) {
-            moneyDropCommand.setExecutor(new DropMoneyCommand(moneyDroppingService));
-        }
-
-        plugin.getServer().getPluginManager().registerEvents(new MoneyDepositListener(moneyDroppingService), plugin);
+        pluginInstance.registerCommand("moneyDrop", new DropMoneyCommand(moneyDroppingService));
+        pluginInstance.registerListener(new MoneyDepositListener(moneyDroppingService));
 
         return LoadingStates.ok();
     }
 
     @Override
-    public LoadingState performUnload(Plugin plugin, DependencyMapper dependencyMapper) {
+    public LoadingState performUnload(PluginInstance pluginInstance, DependencyMapper dependencyMapper) {
         return LoadingStates.ok();
     }
 }

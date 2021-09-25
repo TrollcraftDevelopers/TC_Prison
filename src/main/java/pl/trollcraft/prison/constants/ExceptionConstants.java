@@ -9,4 +9,6 @@ public class ExceptionConstants {
     public static final String USER_INFO_FAILED_TO_INSTANTIATE_COMPONENT = "Failed to instantiate component: '%s'.";
 
     public static final String PLUGIN_DISABLE_LOCALE_SERVICE_NOT_FOUND = "Could not find the LocaleService class";
+
+    public static final String CANNOT_REGISTER_PLUGIN_COMMAND = "Cannot register command '%s' to %s due to lacking plugin.yml entry (probably).";
 }

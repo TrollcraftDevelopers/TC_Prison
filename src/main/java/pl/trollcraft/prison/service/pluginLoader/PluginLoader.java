@@ -1,7 +1,7 @@
 package pl.trollcraft.prison.service.pluginLoader;
 
-import com.google.common.eventbus.EventBus;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.*;
 import java.util.logging.Logger;
@@ -16,14 +16,14 @@ public final class PluginLoader {
     private static final Logger LOG
             = Logger.getLogger(PluginLoader.class.getSimpleName());
 
-    private final Plugin plugin;
+    private final PluginInstance pluginInstance;
     private final List<LoadingTask> loadingTasks;
     private final DependencyMapper dependencyMapper;
     private final LoadingTaskPriorityComparator comparator;
 
     public PluginLoader(Plugin plugin) {
-        this.plugin = plugin;
-        loadingTasks = new ArrayList<>();
+        this.pluginInstance = new PluginInstance((JavaPlugin) plugin);
+        this.loadingTasks = new ArrayList<>();
         this.dependencyMapper = new DependencyMapper();
         this.comparator = new LoadingTaskPriorityComparator();
     }
@@ -43,7 +43,7 @@ public final class PluginLoader {
         for (LoadingTask loadingTask : this.loadingTasks) {
 
             LOG.info("Loading: " + loadingTask.name());
-            loadingState = operation == Operation.LOAD ? loadingTask.performLoad(this.plugin, dependencyMapper) : loadingTask.performUnload(this.plugin, dependencyMapper);
+            loadingState = operation == Operation.LOAD ? loadingTask.performLoad(this.pluginInstance, dependencyMapper) : loadingTask.performUnload(this.pluginInstance, dependencyMapper);
             if (!loadingState.isOk()) {
 
                 if (loadingState.isCritical()){

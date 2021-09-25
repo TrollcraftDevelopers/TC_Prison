@@ -1,14 +1,10 @@
 package pl.trollcraft.prison.service.pluginLoader.loadingTasks;
 
-import org.bukkit.plugin.Plugin;
 import pl.trollcraft.prison.service.configuration.Config;
 import pl.trollcraft.prison.service.configuration.Configurator;
 import pl.trollcraft.prison.service.configuration.configs.LocaleConfig;
 import pl.trollcraft.prison.service.localeService.LocaleService;
-import pl.trollcraft.prison.service.pluginLoader.DependencyMapper;
-import pl.trollcraft.prison.service.pluginLoader.LoadingState;
-import pl.trollcraft.prison.service.pluginLoader.LoadingStates;
-import pl.trollcraft.prison.service.pluginLoader.LoadingTask;
+import pl.trollcraft.prison.service.pluginLoader.*;
 
 public class LocaleServiceLoadingTask implements LoadingTask {
 
@@ -23,8 +19,8 @@ public class LocaleServiceLoadingTask implements LoadingTask {
     }
 
     @Override
-    public LoadingState performLoad(Plugin plugin, DependencyMapper dependencyMapper) {
-        Configurator configurator = new Configurator(plugin, "locale.yml", true);
+    public LoadingState performLoad(PluginInstance pluginInstance, DependencyMapper dependencyMapper) {
+        Configurator configurator = new Configurator(pluginInstance.getPlugin(), "locale.yml", true);
         Config<LocaleService> localeServiceConfig = new LocaleConfig();
         LocaleService localeService = localeServiceConfig.configure(configurator);
 
@@ -34,7 +30,7 @@ public class LocaleServiceLoadingTask implements LoadingTask {
     }
 
     @Override
-    public LoadingState performUnload(Plugin plugin, DependencyMapper dependencyMapper) {
+    public LoadingState performUnload(PluginInstance pluginInstance, DependencyMapper dependencyMapper) {
         return LoadingStates.ok();
     }
 }

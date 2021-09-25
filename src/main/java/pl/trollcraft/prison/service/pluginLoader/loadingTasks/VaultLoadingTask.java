@@ -5,10 +5,7 @@ import org.bukkit.Server;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import pl.trollcraft.prison.constants.Constants;
-import pl.trollcraft.prison.service.pluginLoader.DependencyMapper;
-import pl.trollcraft.prison.service.pluginLoader.LoadingState;
-import pl.trollcraft.prison.service.pluginLoader.LoadingStates;
-import pl.trollcraft.prison.service.pluginLoader.LoadingTask;
+import pl.trollcraft.prison.service.pluginLoader.*;
 
 public final class VaultLoadingTask implements LoadingTask {
 
@@ -23,9 +20,9 @@ public final class VaultLoadingTask implements LoadingTask {
     }
 
     @Override
-    public LoadingState performLoad(Plugin plugin, DependencyMapper dependencyMapper) {
+    public LoadingState performLoad(PluginInstance pluginInstance, DependencyMapper dependencyMapper) {
 
-        Server server = plugin.getServer();
+        Server server = pluginInstance.getPlugin().getServer();
 
         if (server.getPluginManager().getPlugin(Constants.PLUGIN_VAULT_NAME) == null) {
             return LoadingStates.critical("Vault nie zostal wykryty.");
@@ -42,7 +39,7 @@ public final class VaultLoadingTask implements LoadingTask {
     }
 
     @Override
-    public LoadingState performUnload(Plugin plugin, DependencyMapper dependencyMapper) {
+    public LoadingState performUnload(PluginInstance pluginInstance, DependencyMapper dependencyMapper) {
         return LoadingStates.ok();
     }
 }
